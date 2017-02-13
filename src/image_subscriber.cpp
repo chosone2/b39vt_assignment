@@ -57,6 +57,11 @@ public:
     //cv::imshow(OPENCV_WINDOW, cv_ptr->image);
     //cv::waitKey(3);
   }
+
+  cv::Mat getImage(){
+    return cv_ptr->image;
+  }
+
 };
 
 int main(int argc, char** argv)
@@ -64,14 +69,15 @@ int main(int argc, char** argv)
   ros::init(argc, argv, "image_subscriber");
   ImageSubscriber ic;
   
-  cv::Mat a;
-  cv::Mat b;
+  cv::Mat source;
+  cv::Mat templ;
   
   while (ros::ok())
   {
 		if (ic.data_valid)
 		{
-			templateMatching(a, b);
+			source = ic.getImage();
+			templateMatching(source, templ);
 			// Your code goes here
 		}
   	ros::spinOnce();
